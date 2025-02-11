@@ -1,0 +1,181 @@
+{
+  "apps": [
+
+    {
+      "name": "GitHub",
+      "url": "https://github.com/mertcan-tas",
+      "icon": "google.svg"
+    },
+
+    {
+      "name": "Roadmap",
+      "url": "https://roadmap.sh",
+      "icon": "roadmap"
+    },
+
+
+    {
+      "name": "Gitlab",
+      "url": "https://gitlab.com/users/mertcan-tas/projects",
+      "icon": "google.svg"
+    },
+    {
+      "name": "Gitee",
+      "url": "https://gitee.com/explore",
+      "icon": "gitee"
+    },
+    
+
+    {
+      "name": "Linkedin",
+      "url": "https://www.linkedin.com/feed/",
+      "icon": "google.svg"
+    },
+    {
+      "name": "Youtube",
+      "url": "https://www.youtube.com/feed/subscriptions",
+      "icon": "google.svg"
+    },
+    {
+      "name": "Instagram",
+      "url": "https://www.instagram.com/",
+      "icon": "instagram"
+    },
+    {
+      "name": "Pinterest",
+      "url": "https://tr.pinterest.com/",
+      "icon": "pinterest"
+    },
+    
+
+
+    {
+      "name": "DeepSeek",
+      "url": "https://chat.deepseek.com/",
+      "icon": "google.svg"
+    },
+
+    {
+      "name": "Reddit",
+      "url": "https://www.reddit.com/",
+      "icon": "google.svg"
+    },
+    {
+      "name": "Kaggle",
+      "url": "https://www.kaggle.com/",
+      "icon": "google.svg"
+    },
+    {
+      "name": "BTK Akademi",
+      "url": "https://www.btkakademi.gov.tr/portal",
+      "icon": "google.svg"
+    },
+
+
+    {
+      "name": "Udemy",
+      "url": "https://www.udemy.com/home/my-courses/learning/",
+      "icon": "google.svg"
+    },
+
+    
+
+    
+
+    {
+      "name": "Goalkicker",
+      "url": "https://books.goalkicker.com/",
+      "icon": "goalkicker"
+    },
+    {
+      "name": "IT Books",
+      "url": "https://it-ebooks-search.info/",
+      "icon": "google.svg"
+    },
+
+    {
+      "name": "IT Books",
+      "url": "https://www.yazilimturkiye.com/",
+      "icon": "google.svg"
+    },
+
+    
+    
+    
+    {
+      "name": "Doc. Translate",
+      "url": "https://app.immersivetranslate.com/",
+      "icon": "google.svg"
+    },
+    {
+      "name": "Linkedin Learn",
+      "url": "https://www.linkedin.com/learning/",
+      "icon": "google.svg"
+    },
+
+    {
+      "name": "Ororo",
+      "url": "https://ororo.tv/en/channels",
+      "icon": "ororo"
+    },
+
+    
+    
+    {
+      "name": "Mailtrap",
+      "url": "https://mailtrap.io/signin",
+      "icon": "google.svg"
+    },
+
+    {
+      "name": "Docker Docs",
+      "url": "https://docs.docker.com/reference/cli/docker/",
+      "icon": "google.svg"
+    },
+    {
+      "name": "Docker Hub",
+      "url": "https://hub.docker.com/",
+      "icon": "google.svg"
+    },
+    {
+      "name": "Hugging Face",
+      "url": "https://huggingface.co/models",
+      "icon": "google.svg"
+    },
+
+
+    {
+      "name": "Dribbble",
+      "url": "https://dribbble.com/",
+      "icon": "google.svg"
+    },
+    {
+      "name": "Mockuptree",
+      "url": "https://mockuptree.com/",
+      "icon": "google.svg"
+    },
+    {
+      "name": "Behance",
+      "url": "https://www.behance.net/",
+      "icon": "google.svg"
+    },
+
+
+
+    {
+      "name": "Tineye",
+      "url": "https://tineye.com/",
+      "icon": "google.svg"
+    },
+    {
+      "name": "Behance",
+      "url": "https://pimeyes.com/en",
+      "icon": "google.svg"
+    }
+
+
+
+
+
+  ]
+}

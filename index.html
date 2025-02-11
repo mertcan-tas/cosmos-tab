@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hoşgeldin Mertcan!</title>
+    <script src="/assets/js/tailwind.min.js"></script>
+    <style>
+        .background-container {
+            background-image: url('/assets/img/1.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+    </style>
+</head>
+<body class="min-h-screen relative">
+    <div class="absolute inset-0 bg-black/30 z-0"></div>
+    
+    <div class="relative z-10 container mx-auto pt-8 pb-4 px-4">
+        <div class="grid grid-cols-4 md:grid-cols-12 gap-4" id="appGrid">
+            <!-- Uygulamalar buraya dinamik olarak eklenecek -->
+        </div>
+    </div>
+
+    <!-- Arkaplan Resmi -->
+    <div class="fixed inset-0 -z-10">
+        <img src="/assets/img/1.jpg" alt="Background" class="w-full h-full object-cover">
+    </div>
+
+    <!-- Harici JS dosyasını ekle -->
+    <script src="/assets/js/app.js"></script>
+</body>
+</html>
