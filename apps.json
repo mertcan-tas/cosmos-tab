@@ -431,6 +431,24 @@
       "url": "https://tineye.com/",
       "icon": "6/tineye",
       "row": 6
+    },
+    {
+      "name": "Doc Translate",
+      "url": "https://app.immersivetranslate.com/",
+      "icon": "7/doctranslate",
+      "row": 7
+    },
+    {
+      "name": "Claude",
+      "url": "https://claude.ai/new",
+      "icon": "7/claude",
+      "row": 7
+    },
+    {
+      "name": "Eleven Labs",
+      "url": "https://elevenlabs.io/app/speech-synthesis/text-to-speech",
+      "icon": "7/eleven",
+      "row": 7
     }
   ]
 }
