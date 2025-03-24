@@ -381,6 +381,9 @@ function setupDragAndDrop(element) {
         e.dataTransfer.setData('text/plain', element.getAttribute('data-name') + '|' + element.getAttribute('data-url'));
         element.classList.add('dragging');
         
+        // Sürükleme başlatıldığında orijinal pozisyonu kaydet
+        element.setAttribute('data-original-index', Array.from(element.parentNode.children).indexOf(element));
+        
         // Set a ghost image that's invisible
         const ghost = document.createElement('div');
         ghost.style.opacity = '0';
@@ -395,7 +398,16 @@ function setupDragAndDrop(element) {
     
     element.addEventListener('dragend', () => {
         element.classList.remove('dragging');
+        
+        // Animasyonu tamamlandıktan sonra pozisyonları kaydet
         saveAppPositions();
+        
+        // Sürükleme bittiğinde tüm elementlerin animasyonunu sıfırla
+        const allItems = document.querySelectorAll('.app-item');
+        allItems.forEach(item => {
+            item.style.transition = '';
+            item.style.transform = '';
+        });
     });
     
     element.addEventListener('dragover', (e) => {
@@ -408,15 +420,25 @@ function setupDragAndDrop(element) {
         const container = document.getElementById('appGridContainer');
         const allApps = Array.from(container.querySelectorAll('.app-item:not(.dragging)'));
         
-        // Find the app we're dragging over
-        const nextApp = allApps.find(app => {
-            const rect = app.getBoundingClientRect();
-            const mouseX = e.clientX;
-            return mouseX < rect.left + rect.width / 2;
-        });
+        // En yakın elementi hem X hem de Y koordinatlarına göre bul
+        const closestApp = findClosestElement(allApps, e.clientX, e.clientY);
         
-        if (nextApp) {
-            container.insertBefore(dragging, nextApp);
+        if (closestApp) {
+            // Sürüklenen element ile en yakın element arasındaki pozisyonu belirle
+            const draggingRect = dragging.getBoundingClientRect();
+            const closestRect = closestApp.getBoundingClientRect();
+            
+            // Yer değiştirme yönünü belirle
+            const isBefore = isBeforeElement(e.clientX, e.clientY, closestApp);
+            
+            if (isBefore) {
+                container.insertBefore(dragging, closestApp);
+            } else {
+                container.insertBefore(dragging, closestApp.nextSibling);
+            }
+            
+            // Diğer elementlere animasyon ekle
+            animateOtherElements(dragging, container);
         } else {
             container.appendChild(dragging);
         }
@@ -425,6 +447,83 @@ function setupDragAndDrop(element) {
     element.addEventListener('drop', (e) => {
         if (!isEditMode) return;
         e.preventDefault();
+    });
+}
+
+// Find closest element considering both X and Y coordinates
+function findClosestElement(elements, x, y) {
+    let closestDistance = Infinity;
+    let closestElement = null;
+    
+    elements.forEach(element => {
+        const rect = element.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        
+        // Calculate distance using Euclidean distance formula
+        const distance = Math.sqrt(
+            Math.pow(x - centerX, 2) + 
+            Math.pow(y - centerY, 2)
+        );
+        
+        if (distance < closestDistance) {
+            closestDistance = distance;
+            closestElement = element;
+        }
+    });
+    
+    return closestElement;
+}
+
+// Determine if mouse position is before or after element
+function isBeforeElement(x, y, element) {
+    const rect = element.getBoundingClientRect();
+    
+    // Grid yapısına göre karar ver
+    // Aynı satırdaysa X koordinatına göre, farklı satırdaysa Y koordinatına göre
+    const isSameRow = Math.abs(y - (rect.top + rect.height / 2)) < rect.height;
+    
+    if (isSameRow) {
+        return x < rect.left + rect.width / 2;
+    } else {
+        return y < rect.top + rect.height / 2;
+    }
+}
+
+// Animate elements during drag
+function animateOtherElements(draggingElement, container) {
+    const allElements = Array.from(container.querySelectorAll('.app-item'));
+    const draggingIndex = Array.from(container.children).indexOf(draggingElement);
+    
+    allElements.forEach((item, index) => {
+        if (item !== draggingElement) {
+            const itemIndex = Array.from(container.children).indexOf(item);
+            
+            // Tüm elementlerin geçiş animasyonu için transition ekle
+            item.style.transition = 'transform 0.2s cubic-bezier(0.2, 0, 0.2, 1)';
+            
+            // Yer değiştirme sırasında hafif bir animasyon ekle
+            if (Math.abs(itemIndex - draggingIndex) <= 2) {
+                // Yakındaki elementler için daha belirgin animasyon
+                const direction = itemIndex < draggingIndex ? -1 : 1;
+                
+                // Sürüklenen elemanın pozisyonuna bağlı olarak hafif bir animasyon ekle
+                if (direction === -1) {
+                    // Eleman solda kalıyorsa sağa doğru hafif bir hareket ve ölçeklendirme
+                    item.style.transform = 'scale(1.02) translateX(2px)';
+                } else {
+                    // Eleman sağda kalıyorsa sola doğru hafif bir hareket ve ölçeklendirme
+                    item.style.transform = 'scale(1.02) translateX(-2px)';
+                }
+                
+                // Kısa bir gecikme sonra dönüşümü sıfırla
+                setTimeout(() => {
+                    if (item.style.transform) {
+                        item.style.transform = '';
+                    }
+                }, 200);
+            }
+        }
     });
 }
 
@@ -600,7 +699,7 @@ async function checkImageExists(url) {
 async function getSettings() {
     return new Promise((resolve) => {
         if (typeof chrome !== 'undefined' && chrome.storage) {
-            chrome.storage.local.get('kozmos_settings', (result) => {
+            chrome.storage.sync.get('kozmos_settings', (result) => {
                 const defaultSettings = {
                     background: '1.jpg',
                     customBackground: '',
@@ -637,7 +736,7 @@ async function getSettings() {
 async function saveSettings(settings) {
     return new Promise((resolve) => {
         if (typeof chrome !== 'undefined' && chrome.storage) {
-            chrome.storage.local.set({ 'kozmos_settings': settings }, resolve);
+            chrome.storage.sync.set({ 'kozmos_settings': settings }, resolve);
         } else {
             // Fallback for local development
             console.log('Storage API not available, settings not saved');
