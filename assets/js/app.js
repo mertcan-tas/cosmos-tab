@@ -600,7 +600,7 @@ async function checkImageExists(url) {
 async function getSettings() {
     return new Promise((resolve) => {
         if (typeof chrome !== 'undefined' && chrome.storage) {
-            chrome.storage.sync.get('kozmos_settings', (result) => {
+            chrome.storage.local.get('kozmos_settings', (result) => {
                 const defaultSettings = {
                     background: '1.jpg',
                     customBackground: '',
@@ -637,7 +637,7 @@ async function getSettings() {
 async function saveSettings(settings) {
     return new Promise((resolve) => {
         if (typeof chrome !== 'undefined' && chrome.storage) {
-            chrome.storage.sync.set({ 'kozmos_settings': settings }, resolve);
+            chrome.storage.local.set({ 'kozmos_settings': settings }, resolve);
         } else {
             // Fallback for local development
             console.log('Storage API not available, settings not saved');
