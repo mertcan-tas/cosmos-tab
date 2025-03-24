@@ -6,8 +6,12 @@
     <title>Hoşgeldin Mertcan!</title>
     <script src="/assets/js/tailwind.min.js"></script>
     <style>
+        :root {
+            --bg-image: url('/assets/img/1.jpg');
+        }
+        
         .background-container {
-            background-image: url('/assets/img/1.jpg');
+            background-image: var(--bg-image);
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -17,6 +21,96 @@
         #appGridContainer > div:first-child {
             margin-top: 2rem; /* veya tailwind class: mt-8 */
         }
+        
+        /* Settings button */
+        .settings-btn {
+            position: fixed;
+            right: 12px;
+            bottom: 12px;
+            z-index: 20;
+            background-color: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(5px);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .settings-btn:hover {
+            background-color: rgba(255, 255, 255, 0.5);
+            transform: scale(1.05);
+        }
+        
+        .settings-btn svg {
+            width: 20px;
+            height: 20px;
+            color: rgba(0, 0, 0, 0.7);
+        }
+        
+        /* Edit button */
+        .edit-btn {
+            position: fixed;
+            right: 12px;
+            bottom: 14px;
+            z-index: 20;
+            background-color: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(5px);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .edit-btn:hover {
+            background-color: rgba(255, 255, 255, 0.5);
+            transform: scale(1.05);
+        }
+        
+        .edit-btn.active {
+            background-color: rgba(59, 130, 246, 0.7);
+        }
+        
+        .edit-btn svg {
+            width: 20px;
+            height: 20px;
+            color: rgba(0, 0, 0, 0.7);
+        }
+        
+        .edit-btn.active svg {
+            color: white;
+        }
+        
+        /* Draggable items in edit mode */
+        .app-item.edit-mode {
+            cursor: move;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .app-item.dragging {
+            opacity: 0.7;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.8);
+            background-color: rgba(59, 130, 246, 0.2);
+        }
+        
+        .delete-btn {
+            transition: all 0.2s;
+        }
+        
+        .delete-btn:hover {
+            transform: scale(1.1);
+            background-color: #f05252;
+        }
     </style>
 </head>
 <body class="min-h-screen relative">
@@ -24,7 +118,7 @@
     
     <div class="relative z-10 container mx-auto pt-8 pb-4 px-4">
         <div id="appGridContainer">
-            <!-- Satırlar buraya eklenecek -->
+            <!-- Uygulamalar buraya eklenecek -->
         </div>
     </div>
 
@@ -32,6 +126,7 @@
         <img src="/assets/img/1.jpg" alt="Background" class="w-full h-full object-cover">
     </div>
 
-    <script src="/assets/js/app.js"></script>
+    
+    <script src="/assets/js/app.js" defer></script>
 </body>
 </html>

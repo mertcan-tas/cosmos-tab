@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kozmos Ayarlar</title>
+    <script src="/assets/js/tailwind.min.js"></script>
+    <style>
+        :root {
+            --bg-image: url('/assets/img/1.jpg');
+        }
+        
+        body {
+            background-image: var(--bg-image);
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+        
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: -1;
+        }
+        
+        .settings-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .card {
+            background-color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-2px);
+        }
+        
+        .form-checkbox {
+            border-radius: 0.25rem;
+            border-color: rgba(156, 163, 175, 1);
+        }
+        
+        .form-checkbox:checked {
+            background-color: rgba(59, 130, 246, 1);
+            border-color: rgba(59, 130, 246, 1);
+        }
+        
+        .bg-image-preview {
+            background-size: cover;
+            background-position: center;
+            border: 2px solid transparent;
+        }
+        
+        .bg-image-preview.active {
+            border-color: rgba(59, 130, 246, 1);
+        }
+        
+        .btn {
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay"></div>
+    
+    <div class="settings-container py-8">
+        <div class="card p-6 mb-8">
+            <div class="flex items-center justify-between mb-6">
+                <h1 class="text-2xl font-bold text-gray-800">Kozmos Ayarlar</h1>
+                <a href="index.html" class="btn bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+                    Ana Sayfaya Dön
+                </a>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Arkaplan Seçimi -->
+                <div>
+                    <h2 class="text-xl font-semibold text-gray-700 mb-4">Arkaplan Seçimi</h2>
+                    <div class="flex flex-wrap gap-3 mb-4">
+                        <div class="bg-image-preview w-20 h-20 rounded-lg cursor-pointer hover:border-blue-500 transition-all" data-img="1.jpg"></div>
+                        <div class="bg-image-preview w-20 h-20 rounded-lg cursor-pointer hover:border-blue-500 transition-all" data-img="2.jpg"></div>
+                        <div class="bg-image-preview w-20 h-20 rounded-lg cursor-pointer hover:border-blue-500 transition-all" data-img="3.jpg"></div>
+                        <div class="bg-image-preview w-20 h-20 rounded-lg cursor-pointer hover:border-blue-500 transition-all" data-img="4.jpg"></div>
+                        <div class="custom-bg-btn w-20 h-20 flex items-center justify-center rounded-lg border-2 border-dashed border-gray-400 cursor-pointer hover:border-blue-500 transition-all">
+                            <span class="text-gray-500 text-sm text-center">Özel URL</span>
+                        </div>
+                    </div>
+                    <div id="customBgInput" class="hidden mb-4">
+                        <div class="flex gap-2">
+                            <input type="text" id="customBgUrl" placeholder="Resim URL" class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+                            <button id="saveBgUrl" class="btn bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm">Kaydet</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Genel Ayarlar -->
+                <div>
+                    <h2 class="text-xl font-semibold text-gray-700 mb-4">Görünüm Ayarları</h2>
+                    <div class="space-y-3">
+                        <label class="flex items-center space-x-3 text-gray-700 cursor-pointer">
+                            <input type="checkbox" id="darkOverlay" class="form-checkbox h-5 w-5 text-blue-500">
+                            <span>Koyu Arka Plan Katmanı</span>
+                        </label>
+                        <label class="flex items-center space-x-3 text-gray-700 cursor-pointer">
+                            <input type="checkbox" id="openNewTab" class="form-checkbox h-5 w-5 text-blue-500">
+                            <span>Linkleri Yeni Sekmede Aç</span>
+                        </label>
+                        <label class="flex items-center space-x-3 text-gray-700 cursor-pointer">
+                            <input type="checkbox" id="cacheIcons" class="form-checkbox h-5 w-5 text-blue-500">
+                            <span>İkonları Önbelleğe Al</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Kısayol Ekleme -->
+                <div class="md:col-span-2">
+                    <h2 class="text-xl font-semibold text-gray-700 mb-4">Kısayol Ekle</h2>
+                    <form id="addShortcutForm" class="space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <input type="text" id="shortcutName" placeholder="Adı" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+                            <input type="url" id="shortcutUrl" placeholder="URL (https://...)" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+                        </div>
+                        <div class="flex justify-end">
+                            <button type="submit" class="btn bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg text-sm">Ekle</button>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- Dışa Aktarma -->
+                <div class="md:col-span-2">
+                    <h2 class="text-xl font-semibold text-gray-700 mb-4">Yedek ve Dışa Aktarma</h2>
+                    <div class="flex flex-col md:flex-row gap-4">
+                        <button id="exportBookmarks" class="btn bg-purple-500 hover:bg-purple-600 text-white px-6 py-3 rounded-lg flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                            </svg>
+                            Yer İmlerini Dışa Aktar
+                        </button>
+                        <button id="exportSettings" class="btn bg-indigo-500 hover:bg-indigo-600 text-white px-6 py-3 rounded-lg flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+                            </svg>
+                            Tüm Ayarları Yedekle
+                        </button>
+                        <label for="importSettings" class="btn bg-teal-500 hover:bg-teal-600 text-white px-6 py-3 rounded-lg flex items-center justify-center cursor-pointer">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                            </svg>
+                            Ayarları İçe Aktar
+                            <input type="file" id="importSettings" accept=".json" class="hidden">
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Tehlikeli Bölge -->
+                <div class="md:col-span-2 mt-4">
+                    <h2 class="text-xl font-semibold text-red-600 mb-4">Tehlikeli Bölge</h2>
+                    <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                        <button id="resetSettings" class="btn bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-lg flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                            Tüm Ayarları Sıfırla
+                        </button>
+                        <p class="text-red-600 text-sm mt-2">Bu işlem tüm kısayollarınızı ve ayarlarınızı silecektir. Bu işlem geri alınamaz!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center text-white text-sm opacity-70">
+            <p>Kozmos: New Tab &copy; 2023 | Güzel bir yeni sekme deneyimi</p>
+        </div>
+    </div>
+    
+    <script src="/assets/js/settings.js"></script>
+</body>
+</html> 
