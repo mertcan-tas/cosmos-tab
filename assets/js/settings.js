@@ -423,7 +423,7 @@ function setupSettingsCheckboxes() {
 async function getSettings() {
     return new Promise((resolve) => {
         if (typeof chrome !== 'undefined' && chrome.storage) {
-            chrome.storage.sync.get('kozmos_settings', (result) => {
+            chrome.storage.local.get('kozmos_settings', (result) => {
                 const defaultSettings = {
                     background: '1.jpg',
                     customBackground: '',
@@ -460,7 +460,23 @@ async function getSettings() {
 async function saveSettings(settings) {
     return new Promise((resolve) => {
         if (typeof chrome !== 'undefined' && chrome.storage) {
-            chrome.storage.sync.set({ 'kozmos_settings': settings }, resolve);
+            // Shortcuts verisini optimize edelim
+            if (settings.shortcuts && settings.shortcuts.length > 0) {
+                // Her shortcut için gereksiz fazlalık alanları kaldır
+                settings.shortcuts = settings.shortcuts.map(shortcut => {
+                    // Sadece gerekli alanları tut
+                    return {
+                        name: shortcut.name,
+                        url: shortcut.url,
+                        // Eğer varsa özel alanları da koru
+                        ...(shortcut.custom ? { custom: true } : {}),
+                        ...(shortcut.default ? { default: true } : {}),
+                        ...(shortcut.position !== undefined ? { position: shortcut.position } : {})
+                    };
+                });
+            }
+            
+            chrome.storage.local.set({ 'kozmos_settings': settings }, resolve);
         } else {
             // Fallback for local development
             console.log('Storage API not available, settings not saved');

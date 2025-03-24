@@ -154,6 +154,24 @@ async function loadIconCache() {
 async function saveIconCache() {
     return new Promise((resolve) => {
         if (typeof chrome !== 'undefined' && chrome.storage) {
+            // Eğer cache çok büyükse, gereksiz eski öğeleri temizle
+            const cacheSize = Object.keys(iconCache).length;
+            if (cacheSize > 100) {
+                const cacheEntries = Object.entries(iconCache);
+                // En son 80 öğeyi tut, gerisini temizle
+                const sortedEntries = cacheEntries.sort((a, b) => {
+                    return (b[1].timestamp || 0) - (a[1].timestamp || 0);
+                });
+                iconCache = Object.fromEntries(sortedEntries.slice(0, 80));
+            }
+            
+            // Her cache öğesi için timestamp ekle
+            Object.keys(iconCache).forEach(key => {
+                if (!iconCache[key].timestamp) {
+                    iconCache[key].timestamp = Date.now();
+                }
+            });
+            
             chrome.storage.local.set({ 'kozmos_icon_cache': iconCache }, resolve);
         } else {
             resolve();
@@ -699,7 +717,7 @@ async function checkImageExists(url) {
 async function getSettings() {
     return new Promise((resolve) => {
         if (typeof chrome !== 'undefined' && chrome.storage) {
-            chrome.storage.sync.get('kozmos_settings', (result) => {
+            chrome.storage.local.get('kozmos_settings', (result) => {
                 const defaultSettings = {
                     background: '1.jpg',
                     customBackground: '',
@@ -736,7 +754,23 @@ async function getSettings() {
 async function saveSettings(settings) {
     return new Promise((resolve) => {
         if (typeof chrome !== 'undefined' && chrome.storage) {
-            chrome.storage.sync.set({ 'kozmos_settings': settings }, resolve);
+            // Shortcuts verisini optimize edelim
+            if (settings.shortcuts && settings.shortcuts.length > 0) {
+                // Her shortcut için gereksiz fazlalık alanları kaldır
+                settings.shortcuts = settings.shortcuts.map(shortcut => {
+                    // Sadece gerekli alanları tut
+                    return {
+                        name: shortcut.name,
+                        url: shortcut.url,
+                        // Eğer varsa özel alanları da koru
+                        ...(shortcut.custom ? { custom: true } : {}),
+                        ...(shortcut.default ? { default: true } : {}),
+                        ...(shortcut.position !== undefined ? { position: shortcut.position } : {})
+                    };
+                });
+            }
+            
+            chrome.storage.local.set({ 'kozmos_settings': settings }, resolve);
         } else {
             // Fallback for local development
             console.log('Storage API not available, settings not saved');
