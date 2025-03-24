@@ -13,12 +13,6 @@
       "row": 1
     },
     {
-      "name": "Gitlab",
-      "url": "https://gitlab.com/users/mertcan-tas/projects",
-      "icon": "1/gitlab",
-      "row": 1
-    },
-    {
       "name": "Gitee",
       "url": "https://gitee.com/explore",
       "icon": "1/gitee",
@@ -37,6 +31,12 @@
       "row": 1
     },
     {
+      "name": "Claude",
+      "url": "https://claude.ai/new",
+      "icon": "1/claude",
+      "row": 1
+    },
+    {
       "name": "Reddit",
       "url": "https://www.reddit.com/",
       "icon": "1/reddit",
@@ -49,9 +49,9 @@
       "row": 1
     },
     {
-      "name": "Instagram",
-      "url": "https://www.instagram.com/",
-      "icon": "1/instagram",
+      "name": "Doc Translate",
+      "url": "https://app.immersivetranslate.com/",
+      "icon": "1/doctranslate",
       "row": 1
     },
     {
@@ -427,28 +427,33 @@
       "row": 6
     },
     {
-      "name": "Tineye",
-      "url": "https://tineye.com/",
-      "icon": "6/tineye",
+      "name": "Eleven Labs",
+      "url": "https://elevenlabs.io/app/speech-synthesis/text-to-speech",
+      "icon": "6/eleven",
       "row": 6
     },
     {
-      "name": "Doc Translate",
-      "url": "https://app.immersivetranslate.com/",
-      "icon": "7/doctranslate",
+      "name": "Flutter Packages",
+      "url": "https://pub.dev/packages",
+      "icon": "7/flutter",
       "row": 7
     },
     {
-      "name": "Claude",
-      "url": "https://claude.ai/new",
-      "icon": "7/claude",
+      "name": "Python Packages",
+      "url": "https://pub.dev/packages",
+      "icon": "7/pip",
       "row": 7
     },
     {
-      "name": "Eleven Labs",
-      "url": "https://elevenlabs.io/app/speech-synthesis/text-to-speech",
-      "icon": "7/eleven",
+      "name": "Quick Type",
+      "url": "https://app.quicktype.io/",
+      "icon": "7/quicktype",
       "row": 7
     }
+
+
+    
+    
+    
   ]
 }
