@@ -1,5 +1,11 @@
 # Cosmos New Tab
 
+
+<p align="center">
+	<img src="assets/preview.jpg"/>
+</p>
+
+
 Cosmos is a customizable new tab extension for Chrome. The plugin replaces your new tab page with a beautiful background, quick access shortcuts and a fully customizable interface.
 
 ## Features
