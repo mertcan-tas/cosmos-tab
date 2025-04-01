@@ -3,7 +3,7 @@
   "name": "Kozmos: New Tab",
   "version": "1.2",
   "version_name": "1.2",
-  "description": "Yeni sekmede özel bir HTML sayfası, ayarlanabilir arkaplan ve favicon'lu linkler gösterir.",
+  "description": "Discover a Stunning Start to Every Tab",
   "chrome_url_overrides": {
     "newtab": "index.html"
   },
