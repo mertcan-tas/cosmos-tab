@@ -1,15 +1,14 @@
 {
   "manifest_version": 3,
   "name": "Kozmos: New Tab",
-  "version": "1.2",
-  "version_name": "1.2",
+  "version": "2.0.1",
+  "version_name": "2.0.1",
   "description": "Discover a Stunning Start to Every Tab",
   "chrome_url_overrides": {
-    "newtab": "index.html"
+    "newtab": "dist/index.html"
   },
   "permissions": [
-    "storage",
-    "scripting"
+    "storage"
   ],
   "host_permissions": [
     "https://www.google.com/s2/favicons/*",
@@ -17,7 +16,7 @@
   ],
   "web_accessible_resources": [
     {
-      "resources": ["settings.html", "index.html"],
+      "resources": ["index.html"],
       "matches": [
         "https://www.google.com/*",
         "https://t3.gstatic.com/*"
@@ -29,13 +28,6 @@
       "48": "48x48.png",
       "128": "128x128.png"
     }
-  },
-  "background": {
-    "service_worker": "background.js"
-  },
-  "options_ui": {
-    "page": "settings.html",
-    "open_in_tab": true
   },
   "icons": {
     "48": "48x48.png",
