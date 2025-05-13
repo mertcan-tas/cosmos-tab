@@ -21,9 +21,13 @@ export default defineConfig({
     viteStaticCopy({
       targets: [
         {
-          src: "src/assets/icon/favicon.ico",
-          dest: "",
-          rename: "favicon.ico",
+          src: "src/assets/icon/",
+          dest: ".",
+          rename: "icon/",
+        },
+        {
+          src: "manifest.json",
+          dest: ".",
         },
       ],
     }),
@@ -44,7 +48,6 @@ export default defineConfig({
     exclude: ["vuetify"],
   },
   define: { "process.env": {} },
-
   resolve: {
     alias: {
       "@": fileURLToPath(new URL("./src", import.meta.url)),

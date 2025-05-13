@@ -1,10 +1,10 @@
 {
   "manifest_version": 3,
-  "name": ">White Rabbit: New Tab",
+  "name": "White Rabbit: New Tab",
   "version": "2.0.1",
   "description": "Discover a Stunning Start to Every Tab",
   "chrome_url_overrides": {
-    "newtab": "dist/index.html"
+    "newtab": "index.html"
   },
   "permissions": ["storage"],
   "host_permissions": [
@@ -13,12 +13,12 @@
   ],
   "action": {
     "default_icon": {
-      "48": "assets/icon/48x48.png",
-      "128": "assets/icon/128x128.png"
+      "48": "icon/48x48.png",
+      "128": "icon/128x128.png"
     }
   },
   "icons": {
-    "48": "assets/icon/48x48.png",
-    "128": "assets/icon/128x128.png"
+    "48": "icon/48x48.png",
+    "128": "icon/128x128.png"
   }
 }
