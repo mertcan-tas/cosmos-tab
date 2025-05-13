@@ -26,11 +26,10 @@ body::-webkit-scrollbar {
   display: none;
 }
 
-
 .container-with-scroll {
-  -ms-overflow-style: none; 
-  scrollbar-width: none; 
-  overflow-y: scroll; 
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  overflow-y: scroll;
 }
 
 .container-with-scroll::-webkit-scrollbar {
@@ -46,7 +45,6 @@ body::-webkit-scrollbar {
 .bd-1 {
   border-radius: 1rem;
 }
-
 
 .customgg {
   background: rgba(0, 0, 0, 0.3);

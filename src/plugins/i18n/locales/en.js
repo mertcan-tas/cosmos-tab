@@ -1,6 +1,6 @@
 export default {
   app: {
-    name: "Cosmos: Tab",
+    name: "White Rabbit: New Tab",
   },
   drawer: {
     home: "home",

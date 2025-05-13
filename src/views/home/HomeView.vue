@@ -17,8 +17,9 @@
               cover
             >
               <div v-if="currentArea === index">
-                <v-container class="mt-10 w-66">
+                <v-container class="mt-10 w-50">
                   <v-row>
+                    <!-- Uygulama Kartları -->
                     <v-col
                       v-for="app in area.apps"
                       :key="app.name"
@@ -32,13 +33,14 @@
                       <v-hover>
                         <template v-slot:default="{ isHovering, props }">
                           <v-card
+                            link
+                            :href="app.url"
                             v-bind="props"
                             :color="isHovering ? 'surface' : 'transparent'"
                             elevation="0"
                             height="120"
                             width="87"
                             class="d-flex flex-column align-center justify-center bd-1 no-select cursor-pointer"
-                            @click="openURL(app.url)"
                           >
                             <v-avatar
                               class="pa-2 bd-1"
@@ -47,10 +49,48 @@
                               :image="app.icon"
                             ></v-avatar>
 
+                            <div class="mt-2 text-caption font-weight-bold">
+                              {{
+                                app.name.length > 8
+                                  ? app.name.slice(0, 8) + "."
+                                  : app.name
+                              }}
+                            </div>
+                          </v-card>
+                        </template>
+                      </v-hover>
+                    </v-col>
+
+                    <v-col
+                      cols="12"
+                      sm="4"
+                      md="4"
+                      lg="2"
+                      xl="1"
+                      class="d-flex justify-center pa-1"
+                    >
+                      <v-hover>
+                        <template v-slot:default="{ isHovering, props }">
+                          <v-card
+                            @click="openAddAppDialog"
+                            v-bind="props"
+                            :color="isHovering ? 'surface' : 'transparent'"
+                            elevation="0"
+                            height="120"
+                            width="87"
+                            class="d-flex flex-column align-center justify-center bd-1 no-select cursor-pointer"
+                          >
+                            <v-avatar
+                              class="pa-2 bd-1"
+                              color="white"
+                              size="56"
+                              icon="mdi-plus"
+                            ></v-avatar>
+
                             <div
                               class="mt-2 text-center text-caption font-weight-bold"
                             >
-                              {{ app.name }}
+                              Ekle
                             </div>
                           </v-card>
                         </template>
@@ -93,19 +133,10 @@
                 <v-icon icon="mdi-plus-circle"></v-icon>
                 <div class="mx-1 font-weight-bold">Alan Ekle</div>
               </v-chip>
-
-              <v-chip
-                class="mx-1"
-                color="white"
-                variant="outlined"
-                @click="openAddAppDialog"
-              >
-                <v-icon icon="mdi-application"></v-icon>
-                <div class="mx-1 font-weight-bold">Uygulama Ekle</div>
-              </v-chip>
             </v-chip-group>
           </div>
 
+          <!-- Alan Ekle Dialog -->
           <v-dialog v-model="dialogVisible" max-width="500">
             <v-card class="pa-4">
               <v-card-title class="text-h6">Yeni Alan Ekle</v-card-title>
@@ -137,6 +168,7 @@
             </v-card>
           </v-dialog>
 
+          <!-- Uygulama Ekle Dialog -->
           <v-dialog v-model="appDialogVisible" max-width="500">
             <v-card class="pa-4">
               <v-card-title class="text-h6">Yeni Uygulama Ekle</v-card-title>
@@ -175,11 +207,10 @@
 </template>
 
 <script>
-import { useAreaStore } from "@/plugins/stores/useAreaStore.js";
-import { onMounted, onBeforeUnmount } from "vue";
+import { useAreaStore } from "@/plugins/stores/area-store.js";
 
 export default {
-  name: "HomeView",
+  name: "CustomCarousel",
   data() {
     return {
       currentArea: 0,
@@ -198,16 +229,11 @@ export default {
   setup() {
     const areaStore = useAreaStore();
 
-    onMounted(async () => {
-      try {
-        await areaStore.loadFromStorage();
-      } catch (error) {
-        console.error("Veri yükleme hatası:", error);
-        alert("Veriler yüklenirken bir hata oluştu!");
-      }
-    });
+    areaStore.loadFromLocalStorage();
 
-    return { areaStore };
+    return {
+      areaStore,
+    };
   },
   computed: {
     areas() {
@@ -215,17 +241,6 @@ export default {
     },
   },
   methods: {
-    openURL(url) {
-      if (url) {
-        window.open(url, "_blank");
-      }
-    },
-
-    async handleBeforeUnload() {
-      console.log("Sayfa yenilenirken veriler kaydediliyor...");
-      await this.areaStore.saveToStorage();
-    },
-
     openAddDialog() {
       this.newArea = {
         label: "",
@@ -233,23 +248,21 @@ export default {
       };
       this.dialogVisible = true;
     },
-
-    async saveNewArea() {
-      if (!this.newArea.label || !this.newArea.background) {
-        alert("Lütfen tüm alanları doldurun.");
+    saveNewArea() {
+      if (!this.newArea.label) {
+        alert("Lütfen alan adını girin.");
         return;
       }
 
-      await this.areaStore.addArea({
+      this.areaStore.addArea({
         label: this.newArea.label,
-        background: this.newArea.background,
+        background: this.newArea.background || "",
         apps: [],
       });
 
       this.currentArea = this.areas.length - 1;
       this.dialogVisible = false;
     },
-
     openAddAppDialog() {
       this.newApp = {
         title: "",
@@ -257,31 +270,19 @@ export default {
       };
       this.appDialogVisible = true;
     },
-
-    async saveNewApp() {
+    saveNewApp() {
       if (!this.newApp.title || !this.newApp.url) {
         alert("Lütfen tüm alanları doldurun.");
         return;
       }
 
-      await this.areaStore.addAppToArea(
+      this.areaStore.addAppToArea(
         this.currentArea,
         this.newApp.title,
         this.newApp.url
       );
-
       this.appDialogVisible = false;
     },
   },
-  mounted() {
-    window.addEventListener("beforeunload", this.handleBeforeUnload);
-  },
-  beforeUnmount() {
-    window.removeEventListener("beforeunload", this.handleBeforeUnload);
-  },
 };
 </script>
-
-<style scoped>
-
-</style>

@@ -1,36 +1,24 @@
 {
   "manifest_version": 3,
-  "name": "Kozmos: New Tab",
+  "name": ">White Rabbit: New Tab",
   "version": "2.0.1",
-  "version_name": "2.0.1",
   "description": "Discover a Stunning Start to Every Tab",
   "chrome_url_overrides": {
     "newtab": "dist/index.html"
   },
-  "permissions": [
-    "storage"
-  ],
+  "permissions": ["storage"],
   "host_permissions": [
-    "https://www.google.com/s2/favicons/*",
-    "https://t3.gstatic.com/faviconV2/*"
-  ],
-  "web_accessible_resources": [
-    {
-      "resources": ["index.html"],
-      "matches": [
-        "https://www.google.com/*",
-        "https://t3.gstatic.com/*"
-      ]
-    }
+    "https://www.google.com/s2/favicons/ *",
+    "https://t3.gstatic.com/faviconV2/ *"
   ],
   "action": {
     "default_icon": {
-      "48": "48x48.png",
-      "128": "128x128.png"
+      "48": "assets/icon/48x48.png",
+      "128": "assets/icon/128x128.png"
     }
   },
   "icons": {
-    "48": "48x48.png",
-    "128": "128x128.png"
+    "48": "assets/icon/48x48.png",
+    "128": "assets/icon/128x128.png"
   }
 }

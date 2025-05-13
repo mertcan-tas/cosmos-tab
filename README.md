@@ -1,4 +1,4 @@
-# Cosmos New Tab
+# White Rabbit: New Tab
 
 
 <p align="center">

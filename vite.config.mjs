@@ -1,4 +1,3 @@
-// Plugins
 import Components from "unplugin-vue-components/vite";
 import Vue from "@vitejs/plugin-vue";
 import Vuetify, { transformAssetUrls } from "vite-plugin-vuetify";
@@ -7,6 +6,7 @@ import vueDevTools from "vite-plugin-vue-devtools";
 
 import { defineConfig } from "vite";
 import { fileURLToPath, URL } from "node:url";
+import { viteStaticCopy } from "vite-plugin-static-copy";
 
 export default defineConfig({
   plugins: [
@@ -18,12 +18,21 @@ export default defineConfig({
     Components({
       dirs: ["src/assets", "src/components", "src/layouts", "src/views"],
     }),
+    viteStaticCopy({
+      targets: [
+        {
+          src: "src/assets/icon/favicon.ico",
+          dest: "",
+          rename: "favicon.ico",
+        },
+      ],
+    }),
     Fonts({
       fontsource: {
         families: [
           {
             name: "Roboto",
-            subsets: ['latin'],
+            subsets: ["latin"],
             weights: [100, 300, 400, 500, 700, 900],
             styles: ["normal"],
           },
@@ -35,6 +44,7 @@ export default defineConfig({
     exclude: ["vuetify"],
   },
   define: { "process.env": {} },
+
   resolve: {
     alias: {
       "@": fileURLToPath(new URL("./src", import.meta.url)),
